@@ -1,0 +1,1 @@
+sqlite3 data/biopics.sqlite 'SELECT director, COUNT(*) FROM biopics GROUP BY director' > sa1.txt
