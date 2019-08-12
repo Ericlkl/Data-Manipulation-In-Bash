@@ -1,51 +1,47 @@
-# echo "Bash Q3: How much box office earnings do biopsies generate in each year ? \n"
+echo "Bash Q3: How much box office earnings do biopsies generate in each year ? \n"
 
-# echo "---------------------------------------------- "
-# echo "Generating Report as ba3.html ..."
+echo "---------------------------------------------- "
+echo "Generating Report as ba3.html ..."
 
-# # Generate HTML Body
-# echo '<html lang="en"><head></head><body><table><tr><th>Year</th><th>Average Gross</th></tr>' > output/ba3.html
+# Generate HTML Body
+echo '<html lang="en"><head></head><body><table><tr><th>Year</th><th>Average Gross</th></tr>' > output/ba3.html
 
 # Query
 cut -f 1,4,5 -d , data/biopics.csv |
 uniq |
 cut -f 2,3 -d , |
 sed 's/-/0/g' |
+grep -v year_release,box_office |
 sort |
 uniq |
 awk '
 
 BEGIN { 
   OFS = ","; FS="," 
-  year = 0
-  counter = 1
 }
 
 {
-  if($1 == year){
-    counter += 1
-    Years[year] = year
-    Result[year] += $2
+  if ($2 != 0.0){
+    Years[$1] = $1
+    SUM[$1] += $2
+    COUNT[$1] += 1
   }
-
-  else {
-    Result[$1] = $2
-    counter = 1
-  }
-
-  year = $1
 }
 
 END {
-  for (year in Years)
-    print year, Result[year]
+  for (year in Years){
+    print Years[year], int(SUM[year] / COUNT[year])
+  }
 }
 
 ' |
-sort
+sort -r |
+sed 's/^/<tr><td>/g' |
+sed 's/,/<\/td><td>$/g' |
+sed 's/$/<\/td><\/tr>/g' >> output/ba3.html
 
 
 # Generate HTML END Tag
-# echo '</table></body></html>' >> output/ba3.html
+echo '</table></body></html>' >> output/ba3.html
 
-# echo "ba3.html file generated complete! Please check output/ba3.html"
+echo "ba3.html file generated complete! Please check output/ba3.html"
