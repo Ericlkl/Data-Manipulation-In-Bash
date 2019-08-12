@@ -12,12 +12,12 @@ echo "Generating Report as sa3.html ..."
 # Generate HTML Body
 echo '<html lang="en"><head></head><body><table><tr><th>Year</th><th>Average Gross</th></tr>' > output/sa3.html
 
-sqlite3 data/biopics.sqlite ' SELECT year_release as Year, SUM(box_office) as total_amount FROM biopics GROUP BY Year' |
+sqlite3 data/biopics.sqlite ' SELECT year_release , SUM(box_office) FROM (SELECT DISTINCT title, year_release, box_office from biopics) GROUP BY year_release HAVING SUM(box_office) > 0' |
 sed 's/^/<tr><td>/g' |
 sed 's/|/<\/td><td>$/g' |
 sed 's/$/<\/td><\/tr>/g' >> output/sa3.html
 
 # Generate HTML END Tag
-echo '</table></body></html>' >> output/sa2.html
+echo '</table></body></html>' >> output/sa3.html
 
 echo "sa3.html file generated complete! Please check output/sa3.html"
