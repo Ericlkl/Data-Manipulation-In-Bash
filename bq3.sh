@@ -18,15 +18,19 @@ awk '
 BEGIN { 
   OFS = ","; FS="," 
   year = 0
+  counter = 1
 }
 
 {
   if($1 == year){
+    counter += 1
     Years[year] = year
     Result[year] += $2
   }
+
   else {
-    Result[$1] += $2
+    Result[$1] = $2
+    counter = 1
   }
 
   year = $1
