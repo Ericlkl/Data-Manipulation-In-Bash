@@ -17,7 +17,7 @@ file=$1
 # Idea : Loop through the dataset if the data is not empty 
 #        Add it to the SUM variable and plus one to COUNTER 
 #        At the end, Return integer type of (SUM divided by COUNTER)
-avg=$(awk '
+avgBO=$(awk '
   BEGIN { 
     OFS = ","; FS="," 
     SUM = 0
@@ -53,4 +53,17 @@ popular_race=$(
   awk '{print $2}'
 )
 
-echo ${avg}
+# Output function 
+# What it does : change "-" values in box office to average box office value
+# If race_known equals to UnKnown , changes subject_race to the most probably subject race (occur most)
+awk -v avgBO="$avgBO" -v race="$popular_race" '
+  BEGIN { 
+    OFS = ","; FS="," 
+  }
+
+  {
+    if ($5 == "-") $5 = avgBO
+    if ($10 == "Unknown") $11 = race
+    print $0
+  }
+' $file > data/cleaned_biopics.csv
