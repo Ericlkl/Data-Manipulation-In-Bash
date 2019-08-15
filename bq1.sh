@@ -1,6 +1,7 @@
 echo "Bash Question 1: How many movies has a director made \n"
 
 echo "Generating Result.... \n"
+
 # Steps
 # 1: Get Director column
 # 2: Remove the first director text label

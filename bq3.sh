@@ -22,29 +22,25 @@ echo '<html lang="en"><head></head><body><table><tr><th>Year</th><th>Average Gro
 cut -f 1,4,5 -d , data/biopics.csv |
 uniq |
 cut -f 2,3 -d , |
-sed 's/-/0/g' |
+grep -v - |
 grep -v year_release,box_office |
-sort |
-uniq |
 awk '
 
-BEGIN { 
-  OFS = ","; FS="," 
-}
+  BEGIN { 
+    OFS = ","; FS="," 
+  }
 
-{
-  if ($2 != 0.0){
+  {
     Years[$1] = $1
     SUM[$1] += $2
     COUNT[$1] += 1
   }
-}
 
-END {
-  for (year in Years){
-    print Years[year], int(SUM[year] / COUNT[year])
+  END {
+    for (year in Years){
+      print Years[year], int(SUM[year] / COUNT[year])
+    }
   }
-}
 
 ' |
 sort -r |
