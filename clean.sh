@@ -47,8 +47,8 @@ avgBO=$(awk '
 popular_race=$(
   awk -F "," '{ if (length($11) != 0){ print $11 } }' $file |
   tail -n +2 |
-  uniq -c |
   sort -r |
+  uniq -c |
   head -n 1 |
   awk '{print $2}'
 )
@@ -66,4 +66,4 @@ awk -v avgBO="$avgBO" -v race="$popular_race" '
     if ($10 == "Unknown") $11 = race
     print $0
   }
-' $file > data/cleaned_biopics.csv
+' $file 
