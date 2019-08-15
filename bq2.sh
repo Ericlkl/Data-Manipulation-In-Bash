@@ -6,10 +6,6 @@
 # Purpose : Find out Does gender influence how much a movie earns at the box office ?
 # Required: Please enter the file in the parameter one
 #  example: ./bq2.sh data/biopics.csv
-echo "Generating Report as ba2.html ..."
-
-# Generate HTML Body
-echo '<html lang="en"><head></head><body><table><tr><th>Gender</th><th>Total Amount</th></tr>' > output/ba2.html
 
 # Query Function
 # What it does : Query how much does gender earns at the box office
@@ -32,11 +28,24 @@ genderQueryAndSave(){
   sed 's/$/<\/td><\/tr>/g' >> output/ba2.html
 }
 
-# Call Query function Params1 = filename, Params2 = gender
-genderQueryAndSave $1 Male
-genderQueryAndSave $1 Female
+clear
+# Parameters Checker
+if [ -z "$1" ];
+  then 
+    echo "This file is designed to seperate data from code" 
+    echo "Please insert biopics.csv as parameter 1"
+    echo "example: ./bq2.sh data/biopics.csv"
+else
+  # Generate HTML Body
+  echo "Generating Report as ba2.html ..."
+  echo '<html lang="en"><head></head><body><table><tr><th>Gender</th><th>Total Amount</th></tr>' > output/ba2.html
 
-# Generate HTML END Tag
-echo '</table></body></html>' >> output/ba2.html
+  # Call Query function Params1 = filename, Params2 = gender
+  genderQueryAndSave $1 Male
+  genderQueryAndSave $1 Female
 
-echo "ba2.html file generated complete! Please check output/ba2.html"
+  # Generate HTML END Tag
+  echo '</table></body></html>' >> output/ba2.html
+
+  echo "ba2.html file generated complete! Please check output/ba2.html"
+fi
