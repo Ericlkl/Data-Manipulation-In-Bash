@@ -5,7 +5,7 @@
 # File Name: bq2.sh
 # Purpose : Find out Does gender influence how much a movie earns at the box office ?
 # Required: Please enter the file in the parameter one
-#  example: ./clean.sh data/biopics.csv
+#  example: ./bq2.sh data/biopics.csv
 echo "Generating Report as ba2.html ..."
 
 # Generate HTML Body

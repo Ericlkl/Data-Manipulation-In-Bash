@@ -1,29 +1,32 @@
-echo "Bash Q3: How much box office earnings do biopsies generate in each year ? \n"
+# CAB220 Portfolio 1
+# Developed By: KA LONG LEE 
+# Student ID: N9845097
 
-echo "---------------------------------------------- "
+# File Name: bq3.sh
+# Purpose : Find out How much box office earnings do biopsies generate in each year ?
+# Required: Please enter the file in the parameter one
+#  example: ./bq3.sh data/biopics.csv
 echo "Generating Report as ba3.html ..."
 
 # Generate HTML Body
 echo '<html lang="en"><head></head><body><table><tr><th>Year</th><th>Average Gross</th></tr>' > output/ba3.html
 
 # Query
-
+# Step 0: Clean biopics.csv data but not save to the file
 # Step 1: Select Title, box office, year
 # Step 2: Remove Duplicate record
 # Step 3: Select Only Box Office and year
-# Step 4: Remove all unknown box office record change it to zero
-# Step 5: Remove year_release,box_office label on the top
-# Step 6: Sort 
-# Step 7: Remove Duplicate
-# Step 8: If the record is not 0, Count + 1 / Sum + previous 
-# At the end print the result
-# Step 9: Sort records Reverse
-# Step 10 - 12: Add HTML Table Tag
-cut -f 1,4,5 -d , data/biopics.csv |
+# Step 4: Remove year_release,box_office label on the top
+# Step 5: Sort 
+# Step 6: Calculate AVG by year via AWK
+# Step 7: Sort records Reverse
+# Step 8 - 10: Add HTML Table Tag
+./clean.sh data/biopics.csv |
+cut -f 1,4,5 -d , |
 uniq |
 cut -f 2,3 -d , |
-grep -v - |
-grep -v year_release,box_office |
+tail -n +2 |
+sort |
 awk '
 
   BEGIN { 
