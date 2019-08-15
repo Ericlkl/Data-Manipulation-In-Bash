@@ -16,11 +16,22 @@ avg=$(awk '
   }
 
   END{
-    print SUM, COUNTER
+    print int(SUM / COUNTER)
   }
 
 ' $file) 
 
+popular_race=$(
+  awk '{print $11}' $file |
+  tail -n +2 |
+  uniq -c
+)
 
 
-echo $avg
+
+awk -F "," '{ if (length($11) != 0){ print $11 } }' $file |
+  tail -n +2 |
+  uniq -c |
+  sort -r |
+  head -n 1 |
+  awk '{print $2}'
