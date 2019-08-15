@@ -19,7 +19,7 @@ echo '<html lang="en"><head></head><body><table><tr><th>Year</th><th>Average Gro
 # Step 4: Remove year_release,box_office label on the top
 # Step 5: Sort 
 # Step 6: Calculate AVG by year via AWK
-# Step 7: Sort records Reverse
+# Step 7: Sort 
 # Step 8 - 10: Add HTML Table Tag
 ./clean.sh data/biopics.csv |
 cut -f 1,4,5 -d , |
@@ -46,7 +46,7 @@ awk '
   }
 
 ' |
-sort -r |
+sort |
 sed 's/^/<tr><td>/g' |
 sed 's/,/<\/td><td>$/g' |
 sed 's/$/<\/td><\/tr>/g' >> output/ba3.html
