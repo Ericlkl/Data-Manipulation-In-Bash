@@ -10,15 +10,17 @@
 # Query Function
 # What it does : Query how much does gender earns at the box office
 genderQueryAndSave(){
-  # STEP 1: Clean biopics.csv data but not save to the file
+  # STEP 1: Clean biopics.csv data and save it to ./data/cleaned_biopics.csv
   # STEP 2: Search Only Male Result
   # STEP 3: Get only title, box_office, Gender
   # STEP 4: GET The unique title (Because some of the movie record is duplicated)
   # STEP 5: Remove Title Column (It is useless for our result)
   # STEP 6: AWK cmd to summarise the result
 
-  ./clean.sh $1 |
-  grep $2 |
+  # Save Cleaned dataset as cleaned_biopics.csv
+  ./clean.sh $1 > ./data/cleaned_biopics.csv
+
+  grep $2 ./data/cleaned_biopics.csv|
   cut -f 1,5,13 -d , |
   uniq | 
   cut -f 2,3 -d, | 

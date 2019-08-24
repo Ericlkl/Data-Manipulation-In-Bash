@@ -20,7 +20,7 @@ else
   echo '<html lang="en"><head></head><body><table><tr><th>Year</th><th>Average Gross</th></tr>' > output/ba3.html
 
   # Query
-  # Step 0: Clean biopics.csv data but not save to the file
+  # Step 0: Clean biopics.csv data save to ./data/cleaned_biopics.csv
   # Step 1: Select Title, box office, year
   # Step 2: Remove Duplicate record
   # Step 3: Select Only Box Office and year
@@ -29,8 +29,11 @@ else
   # Step 6: Calculate AVG by year via AWK
   # Step 7: Sort 
   # Step 8 - 10: Add HTML Table Tag
-  ./clean.sh data/biopics.csv |
-  cut -f 1,4,5 -d , |
+
+  # Save Cleaned dataset as cleaned_biopics.csv
+  ./clean.sh $1 > ./data/cleaned_biopics.csv
+
+  cut -f 1,4,5 -d , ./data/cleaned_biopics.csv |
   uniq |
   cut -f 2,3 -d , |
   tail -n +2 |

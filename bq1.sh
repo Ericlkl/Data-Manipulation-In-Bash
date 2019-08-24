@@ -16,7 +16,7 @@ if [ -z "$1" ];
     echo "example: ./bq1.sh data/biopics.csv"
 else
   # Steps
-  # 1:  Clean biopics.csv data but not save to the file
+  # 1:  Clean biopics.csv data save it to ./data/cleaned_biopics.csv
   # 2:  Get title,Director column
   # 3:  Remove the column text label on the top
   # 4:  sort the result
@@ -32,8 +32,10 @@ else
 
   echo "Generating Result.... \n"
 
-  ./clean.sh $1 |
-  cut -f 1,6 -d, |
+  # Save Cleaned dataset as cleaned_biopics.csv
+  ./clean.sh $1 > ./data/cleaned_biopics.csv
+  
+  cut -f 1,6 -d, ./data/cleaned_biopics.csv|
   tail -n +2 |
   sort |
   uniq |
